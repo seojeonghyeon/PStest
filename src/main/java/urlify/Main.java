@@ -1,7 +1,7 @@
-package Test;
+package urlify;
 
 
-import java.io.*;
+import java.io.IOException;
 import java.util.Scanner;
 
 
