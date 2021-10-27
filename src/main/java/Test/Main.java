@@ -2,24 +2,30 @@ package Test;
 
 
 import java.io.*;
-import java.util.Scanner;
-
+import java.util.LinkedList;
 
 public class Main {
-    //URLify
-    public String solution(String str){
-        return urlify(str);
-    }
-    public String urlify(String str){
-        str = str.replace(" ","%20");
-        return str;
-    }
+    public void solution(){
 
+    }
 
     public static void main(String[] args) throws IOException {
         Main main = new Main();
-        Scanner scanner = new Scanner(System.in);
-        String str = scanner.nextLine();
-        System.out.println(main.solution(str));
+
+    }
+}
+class Node{
+    int data;
+    Node next;
+    public Node(int data){
+        this.data=data;
+    }
+    void appendToTail(int data){
+        Node end = new Node(data);
+        Node n = this;
+        while(n.next != null){
+            n = next;
+        }
+        n.next = end;
     }
 }
