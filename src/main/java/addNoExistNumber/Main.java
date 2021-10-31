@@ -1,7 +1,6 @@
-package Test;
+package addNoExistNumber;
 
-import java.io.*;
-import java.util.HashMap;
+import java.io.IOException;
 
 public class Main {
     public void solution(){
