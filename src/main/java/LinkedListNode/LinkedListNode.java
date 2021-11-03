@@ -9,6 +9,10 @@ class LinkedList {
     LinkedList(){
         header = new Node();
     }
+    LinkedList(int data){
+        header = new Node();
+        header.data = data;
+    }
     void append(int d){
         Node end = new Node();
         end.data = d;
