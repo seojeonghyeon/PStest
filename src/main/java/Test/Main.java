@@ -8,69 +8,93 @@ public class Main {
 
     public void solution(){
         long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
-        System.out.println(solution(new String[]{"123", "456", "789"}));
+        System.out.println(solution(new String[]{"classic", "pop", "classic", "classic", "pop"}, new int[]{500, 600, 150, 800, 2500}));
         long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
         long secDiffTime = (afterTime - beforeTime); //두 시간에 차 계산
         System.out.println("시간차이(ms) : "+secDiffTime);
     }
-    public boolean solution(String[] phone_book) {
-        boolean answer = true;
-        int j;
-        Tree[] trees = new Tree[10];
-        for(int i=0; i<phone_book.length; i++){
-            char[] phoneBookChar = phone_book[i].toCharArray();
-            j = Character.getNumericValue(phoneBookChar[0]);
-            if(trees[j]==null) {
-                trees[j] = new Tree();
+    public int[] solution(String[] genres, int[] plays) {
+        HashMap<String, GenresClass> hashMap = partGenresSet(genres, plays);
+        return sort(hashMap);
+    }
+    public int[] sort(HashMap<String, GenresClass> hashMap){
+        int[] result={};
+        LinkedList<GenresClass> linkedList = new LinkedList<>();
+        hashMap.forEach((key, value)->{
+            GenresClass genresClass = value;
+            for(int i=0; i<linkedList.size(); i++){
+                if(linkedList.get(i)!=null && linkedList.get(i).totalCount < genresClass.totalCount){
+                    linkedList.add(i,genresClass);
+                    break;
+                }
             }
-            if(trees[j].treeSet(trees[j].root, phoneBookChar, 0)){
-                answer=false;
-                break;
-            }
+        });
+
+        //배열에 넣기
+        for(int i=0; i<linkedList.size(); i++){
+
         }
 
-        return answer;
+        return result;
+    }
+    public HashMap<String, GenresClass> partGenresSet(String[] genres, int[] plays){
+        HashMap<String, GenresClass> hashMap = new HashMap<>();
+        for(int i=0; i<genres.length; i++){
+            if(hashMap.containsKey(genres[i])){
+                GenresClass getGenresClass = hashMap.get(genres[i]);
+                Node getNode = getGenresClass.node;
+                Node node = new Node(i, plays[i]);
+                getGenresClass.addTotal(plays[i]);
+                getNode.addNode(node);
+            }else{
+                GenresClass genresClass = new GenresClass(genres[i], i, plays[i]);
+                genresClass.addTotal(plays[i]);
+                hashMap.put(genres[i], genresClass);
+            }
+        }
+        return hashMap;
+    }
+    class GenresClass{
+        String genres;
+        int totalCount;
+        Node node;
+
+        GenresClass(String genres, int id, int plays){
+            this.genres= genres;
+            totalCount = 0;
+            node = new Node(id, plays);
+        }
+        void addTotal(int plays){
+            totalCount += plays;
+        }
+        int getTotalCount(){
+            return totalCount;
+        }
+        String getGenres(){
+            return genres;
+        }
     }
     class Node{
-        boolean marked;
-        Node[] next;
-        Node(){
-            next = new Node[11];
+        int id;
+        int plays;
+        Node next;
+        Node(int id, int plays){
+            this.id = id;
+            this.plays = plays;
         }
-    }
-    class Tree{
-        Node root;
-        Tree(){
-            root = new Node();
-            root.marked = true;
-            root.next = new Node[11];
-        }
-        boolean treeSet(Node root, char[] chars, int point){
-            if(chars.length-1==point){
-                boolean check = false;
-                for(int i = 0; i<11; i++){
-                    if(root.next[i]!=null){
-                        check = true;
-                    }
+        void addNode(Node node){
+            Node point = this;
+            while(next!=null){
+                if(point.plays > node.plays){
+                    point = next;
+                }else{
+                    break;
                 }
-                if(root.next[10]==null) root.next[10]=new Node();
-                root.next[10].marked=true;
-                if(check) return true;
-                return false;
             }
-            if(root.next[10]!=null && root.next[10].marked){
-                return true;
-            }
-            root.marked=true;
-            int nextPoint = Character.getNumericValue(chars[point+1]);
-            if(root.next[nextPoint]==null){
-                root.next[nextPoint] = new Node();
-                root.next[nextPoint].marked = false;
-            }
-
-            return treeSet(root.next[nextPoint], chars, point+1);
+            Node temp = point.next;
+            point.next = node;
+            node.next = temp;
         }
-
     }
 
 
