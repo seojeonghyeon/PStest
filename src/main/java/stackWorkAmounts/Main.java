@@ -1,7 +1,9 @@
-package Test;
+package stackWorkAmounts;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
 
