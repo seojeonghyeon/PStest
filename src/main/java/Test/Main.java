@@ -7,7 +7,7 @@ public class Main {
 
     public void solution(){
         long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
-        int result = solution(4,3,new int[][]{{2,2}});
+        int result = solution("abcc");
 //        for(int i : result)
             System.out.println(result);
         long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
@@ -15,10 +15,23 @@ public class Main {
         System.out.println("시간차이(ms) : "+secDiffTime);
     }
 
-    public int solution(int m, int n, int[][] puddles) {
-        int answer = 0;
+    char[][] keyboardArray;
+    HashMap<String, Integer> hashMap;
+    int xpoint = 0;
+    int ypoint = 0;
+    public int solution(String s) {
+        int answer = -1;
+        hashMap = new HashMap<>();
+        char[] sArray = s.toCharArray();
+        keyboardArray = new char[][]{
+                {'q','w','e','r','t','y','u','i','o'},
+                {'p','a','s','d','f','g','h','j','k'},
+                {'l','z','x','c','v','b','n','m','!'}
+        };
+
         return answer;
     }
+
 
     public static void main(String[] args) throws IOException {
         Main main = new Main();
