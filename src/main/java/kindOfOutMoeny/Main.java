@@ -1,7 +1,8 @@
-package Test;
+package kindOfOutMoeny;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
 
