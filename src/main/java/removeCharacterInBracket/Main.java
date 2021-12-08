@@ -1,20 +1,13 @@
-package Test;
+package removeCharacterInBracket;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.Stack;
 
 public class Main {
 
     public void solution(){
         long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
-        int result = solution(5, new int[][]{
-                {0, 0, 0, 0, 0},
-                {0, 0, 1, 0, 3},
-                {0, 2, 5, 0, 1},
-                {4, 2, 4, 4, 2},
-                {3, 5, 1, 3, 1}},
-                8,
-                new int[]{1, 5, 3, 5, 1, 2, 1, 4});
+        String result = solution("(A(BC)D)EF(G(H)(IJ)K)LM(N)");
 //        for(int i : result)
             System.out.println(result);
         long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
@@ -22,9 +15,15 @@ public class Main {
         System.out.println("시간차이(ms) : "+secDiffTime);
     }
 
-    public int solution(int N, int[][] board, int M, int[] moves) {
-
-        return ;
+    public String solution(String str) {
+        StringBuilder stringBuilder = new StringBuilder();
+        Stack<Integer> stack = new Stack<>();
+        for(char s : str.toCharArray()){
+            if(s=='(') stack.push(0);
+            else if(s ==')') stack.pop();
+            else if(stack.isEmpty()) stringBuilder.append(s);
+        }
+        return stringBuilder.toString();
     }
 
     public static void main(String[] args) throws IOException {
