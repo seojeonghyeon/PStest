@@ -1,7 +1,7 @@
-package Test;
+package binarySearch;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.Arrays;
 
 public class Main {
 
@@ -16,7 +16,7 @@ public class Main {
     }
 
     public int solution(int[] array,int N, int M) {
-        int answer=Arrays.stream(array).max().getAsInt();
+        int answer=0;
         Arrays.sort(array);
         int lt=0, rt =N-1;
         while(lt <= rt){
