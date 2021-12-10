@@ -1,7 +1,9 @@
-package Test;
+package maxIncomePriorityQueue;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.PriorityQueue;
 
 public class Main {
 
