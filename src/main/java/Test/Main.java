@@ -7,7 +7,7 @@ public class Main {
 
     public void solution(){
         long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
-        int result = solution(5, new int[][]{{1,5},{2,5},{3,5},{4,5}});
+        int result = solution(4, new int[][]{{1,2},{2,3},{3,4}});
 //        for(int i : result)
             System.out.println(result);
         long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
@@ -15,76 +15,74 @@ public class Main {
         System.out.println("시간차이(ms) : "+secDiffTime);
     }
 
-    int[][] nArray;
-    Boolean[] check;
+    Node[] nodes;
+    public class Node{
+        int edge, level;
+        LinkedList<Node> edges;
+        public Node(int edge){
+            this.edge=edge;
+            this.level = 0;
+            edges = new LinkedList<>();
+        }
+    }
+
     public int solution(int n, int[][] edges) {
-        int answer = 0;
-        nArray = new int[n+1][n+1];
-        check = initBoolean(n);
+        initNode(n);
         for(int i=0; i<edges.length; i++){
-            nArray[edges[i][0]][edges[i][1]] = 1;
-            nArray[edges[i][1]][edges[i][0]] = 1;
+            nodes[edges[i][0]].edges.add(nodes[edges[i][1]]);
+            nodes[edges[i][1]].edges.add(nodes[edges[i][0]]);
         }
-        for(int i=1; i<n+1; i++){
-            for(int j=1; j<n+1; j++){
-                if(i==j) continue;
-                if(nArray[i][j]!=0) continue;
-                cleanBoolean();
-                check[i]=true;
-                dfs(i, i, j,1);
-            }
-        }
-        for(int a=1; a<nArray.length; a++){
-            for(int b=a+1; b<nArray.length; b++){
-                for(int c=b+1; c<nArray.length; c++){
-                    int mid = f(a,b,c);
-                    if(answer < mid) answer = mid;
+        return searchFarNode(n);
+    }
+    public int searchFarNode(int n){
+        int start = 1;
+        int count = 0;
+
+        int[] result = bfs(start, n);
+        for(int i=2; i<n+1; i++) if(result[i]>result[start]) start=i;
+
+        int max = start;
+        result = bfs(start, n);
+        for(int i=1; i<n+1; i++) if(result[i]>result[start]) start=i;
+        for(int i=1; i<n+1; i++) if(result[start]==result[i]) count++;
+        if(count >= 2) return result[start];
+
+        count=0;
+        result = bfs(start, n);
+        for(int i=1; i<n+1; i++) if(result[start]==result[i]) count++;
+        if(count >= 2) return result[start];
+        return result[max]-1;
+    }
+    public int[] bfs(int start, int n){
+        int[] result = new int[n+1];
+        Boolean[] check = initBoolean(n);
+        Queue<Node> Q = new LinkedList<>();
+        Q.offer(nodes[start]);
+        check[start] = false;
+        nodes[start].level=0;
+        while(!Q.isEmpty()){
+            Node cur = Q.poll();
+            result[cur.edge]=cur.level;
+            for(Node node : cur.edges){
+                if(check[node.edge]){
+                    Q.add(node);
+                    node.level = cur.level+1;
+                    check[node.edge]=false;
                 }
             }
         }
-        return answer;
+        return result;
     }
-    public int f(int a, int b, int c){
-        int[] n = new int[3];
-        n[0]=nArray[a][b];
-        n[1]=nArray[b][c];
-        n[2]=nArray[c][a];
-        Arrays.sort(n);
-        return n[1];
-    }
-    public void dfs(int cur, int i, int j, int level){
-        if(nArray.length <= i || nArray.length <= j) return;
-        if(nArray[cur][j]!=0){
-            nArray[i][j]=level;
-            nArray[j][i]=level;
-            return ;
-        }
-        if(nArray[i][cur]==0){
-            nArray[i][cur]=level;
-            nArray[cur][i]=level;
-        }
-        for(int k=1; k<nArray.length; k++){
-            if(!check[k] && nArray[cur][k]==1){
-                check[k]=true;
-                if(k==j) {
-                    nArray[i][j]=level+1;
-                    nArray[j][i]=level+1;
-                    return;
-                }
-                dfs(k, i, j, level+1);
-            }
-        }
-    }
-    public void cleanBoolean(){
-        for(int i =0; i<check.length; i++)
-            check[i]=false;
+    public void initNode(int n){
+        nodes = new Node[n+1];
+        for(int i=0; i<n+1; i++) nodes[i]=new Node(i);
     }
     public Boolean[] initBoolean(int n){
-        Boolean[] booleans = new Boolean[n+1];
-        for(int i=0; i<=n; i++)
-            booleans[i]=false;
-        return booleans;
+        Boolean[] check = new Boolean[n+1];
+        for(int i=0; i<n+1; i++) check[i]=true;
+        return check;
     }
+
 
     public static void main(String[] args) throws IOException {
         Main main = new Main();
