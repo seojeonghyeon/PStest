@@ -5,24 +5,32 @@ import java.util.*;
 
 public class Main {
 
-    public void solution(){
-        long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
-        int result = solution(new int[][]{{5,1},{2,5},{3,5},{3,6},{2,4},{4,0}});
-//        for(int i : result)
-            System.out.println(result);
-        long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
-        long secDiffTime = (afterTime - beforeTime); //두 시간에 차 계산
-        System.out.println("시간차이(ms) : "+secDiffTime);
-    }
-
-    public int solution(int[][] t) {
-        int answer = 0;
-        
-        return answer;
-    }
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
-        main.solution();
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        int M = sc.nextInt();
+        int[] array = new int[N];
+        for(int i =0; i<array.length; i++){
+            array[i]=sc.nextInt();
+        }
+        long answer = 0;
+        long lt=1;
+        long rt = 0;
+        for(int i = 0; i<array.length; i++) if(array[i] > rt) rt = array[i];
+        rt = rt*M;
+        answer = rt;
+        while(lt < rt){
+            long sum = 0;
+            long mid = (lt+rt)/2;
+            for(int i : array) sum+=(mid/i);
+            if(sum<M) {
+                lt=mid+1;
+            }else{
+                answer = answer > mid ? mid : answer;
+                rt=mid;
+            }
+        }
+        System.out.print(answer);
     }
 }
