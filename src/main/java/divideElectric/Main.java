@@ -1,7 +1,8 @@
-package Test;
+package divideElectric;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
 
