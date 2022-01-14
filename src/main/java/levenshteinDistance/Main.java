@@ -1,7 +1,7 @@
-package Test;
+package levenshteinDistance;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
 
 public class Main {
 
