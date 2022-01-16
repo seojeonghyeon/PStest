@@ -1,13 +1,12 @@
-package Test;
+package numberOfWays;
 
 import java.io.IOException;
-import java.util.*;
 
 public class Main {
 
     public void solution(){
         long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
-        int result = solution(5, 2);
+        int result = solution(5, 5);
 //        for(String i : result)
             System.out.println(result);
         long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
@@ -15,24 +14,28 @@ public class Main {
         System.out.println("시간차이(ms) : "+secDiffTime);
     }
 
-    public int solution(int n, int k) {
-        return computeBinomialCoefficient(n, k);
+    public int solution(int n, int m) {
+        return numberOfWays(n, m);
     }
-    public static int computeBinomialCoefficient(int n, int k){
-        return computeXChooseY(n, k, new int[n+1][k+1]);
+    public static int numberOfWays(int n, int m){
+        return computeNumberOfWaysToXY(n-1, m-1, new int[n][m]);
     }
-    private static int computeXChooseY(int x, int y, int[][] xChooseY){
-        if(y==0 || x==y){
+
+    //basic
+    private static int computeNumberOfWaysToXY(int x, int y, int[][] numberOfWays){
+        if(x==0 || y==0){
             return 1;
         }
 
-        if(xChooseY[x][y] == 0){
-            int withoutY = computeXChooseY(x-1, y, xChooseY);
-            int withY = computeXChooseY(x-1, y-1, xChooseY);
-            xChooseY[x][y] = withoutY + withY;
+        if(numberOfWays[x][y] == 0){
+            int waysTop = x ==0 ? 0 : computeNumberOfWaysToXY(x-1, y, numberOfWays);
+            int waysLeft = x ==0 ? 0 : computeNumberOfWaysToXY(x, y-1, numberOfWays);
+            numberOfWays[x][y] = waysTop + waysLeft;
         }
-        return xChooseY[x][y];
+        return numberOfWays[x][y];
     }
+
+
 
     public static void main(String[] args) throws IOException {
         Main main = new Main();
