@@ -1,4 +1,4 @@
-package Test;
+package isPatternContainedInGrid;
 
 import java.io.IOException;
 import java.util.*;
