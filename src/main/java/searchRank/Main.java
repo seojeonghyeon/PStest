@@ -1,8 +1,12 @@
-package Test;
+package searchRank;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
+//2021 Kakao Blind recruitment
 public class Main {
 
     public void solution(){
