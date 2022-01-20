@@ -1,7 +1,7 @@
-package Test;
+package shareTaxiFee;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
 
 //2021 kakao blind recruitment
 public class Main {
