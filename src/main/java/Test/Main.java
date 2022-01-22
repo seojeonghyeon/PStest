@@ -8,17 +8,44 @@ public class Main {
 
     public void solution(){
         long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
-        String result = solution("02:03:55", "00:14:15", new String[]{"01:20:15-01:45:14", "00:40:31-01:00:00", "00:25:50-00:48:29", "01:30:59-01:53:29", "01:37:44-02:02:30"});
-//        for(int i : result)
-            System.out.println(result);
+        List<String> result = solution("bedbathandbeyond.com",new String[]{"bed","bath","beyond","bat","hand"});
+        for(String i : result)
+            System.out.println(i);
         long afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
         long secDiffTime = (afterTime - beforeTime); //두 시간에 차 계산
         System.out.println("시간차이(ms) : "+secDiffTime);
     }
 
-    public String solution(String play_time, String adv_time, String[] logs) {
-        String answer = "";
-        return answer;
+    public List<String> solution(String domain, String[] dictionary) {
+        Set<String> list = new HashSet<>();
+        for(String str : dictionary) list.add(str);
+        return decomposeIntoDictionaryWords(domain, list);
+    }
+    public static List<String> decomposeIntoDictionaryWords(String domain, Set<String> dictionary){
+        int[] lastLength = new int[domain.length()];
+        Arrays.fill(lastLength, -1);
+        for(int i=0; i<domain.length(); ++i){
+            if(dictionary.contains(domain.substring(0, i+1))) lastLength[i] = i+1;
+            if(lastLength[i] == -1){
+                for (int j=0; j<i; ++j){
+                    if(lastLength[j] != -1 && dictionary.contains(domain.substring(j+1, i+1))){
+                        lastLength[i] = i-j;
+                        break;
+                    }
+                }
+            }
+        }
+
+        List<String> decompositions = new ArrayList<>();
+        if(lastLength[lastLength.length-1] != -1){
+            int idx = domain.length()-1;
+            while(idx >= 0){
+                decompositions.add(domain.substring(idx+1-lastLength[idx], idx+1));
+                idx -= lastLength[idx];
+            }
+            Collections.reverse(decompositions);
+        }
+        return decompositions;
     }
 
     public static void main(String[] args) throws IOException {

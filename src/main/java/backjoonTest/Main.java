@@ -1,36 +1,54 @@
 package backjoonTest;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 
 public class Main {
 
-    public void solution(String[] Narray, String[] Marray){
-        HashSet<String> hashSet = new HashSet<>();
-        List<String> list = new ArrayList<>();
-        for(String str : Narray) hashSet.add(str);
-        for(String str : Marray) {
-            if(hashSet.contains(str)) list.add(str);
+    private static class study implements Comparable<study>{
+        Integer S, T;
+        private study(Integer S, Integer T){
+            this.S = S;
+            this.T = T;
         }
-        Collections.sort(list);
-        System.out.println(list.size());
-        for(String str : list) System.out.println(str);
+        @Override
+        public int compareTo(study o) {
+            if(o.T.equals(this.T)) return o.S-this.S;
+            return o.T-this.T;
+        }
+    }
+
+    public void solution(study[] Narray) {
+        int answer = 0;
+        boolean[] check = new boolean[Narray.length];
+        Arrays.sort(Narray);
+        PriorityQueue<study> priorityQueue = new PriorityQueue<>(Collections.reverseOrder());
+        priorityQueue.add(Narray[0]);
+        check[0]=true;
+        while (!priorityQueue.isEmpty()){
+            study k = priorityQueue.poll();
+            for (int i = 0; i < Narray.length; i++) {
+                if(!check[i] && k.S > Narray[i].T){
+                    check[i]=true;
+                    priorityQueue.add(Narray[i]);
+                    break;
+                }
+            }
+        }
+
     }
 
     public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        int N = scanner.nextInt();
-        int M = scanner.nextInt();
-        String[] Narray = new String[N];
-        String[] Marray = new String[M];
-        for(int i=0; i<N; i++){
-            Narray[i] = scanner.next();
-        }
-        for(int i=0; i<M; i++){
-            Marray[i] = scanner.next();
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        Integer N = Integer.parseInt(in.readLine());
+        study[] Narray = new study[N];
+        for(Integer i=0; i<N; i++){
+            Integer S = Integer.parseInt(in.readLine());
+            Integer T = Integer.parseInt(in.readLine());
+            Narray[i] = new study(S, T);
         }
         Main main = new Main();
-        main.solution(Narray, Marray);
+        main.solution(Narray);
     }
 }
