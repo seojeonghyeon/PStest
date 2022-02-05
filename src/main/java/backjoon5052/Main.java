@@ -1,7 +1,7 @@
-package backjoonTest;
+package backjoon5052;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
 
 public class Main {
 
