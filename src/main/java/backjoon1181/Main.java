@@ -1,7 +1,8 @@
-package backjoonTest;
+package backjoon1181;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class Main {
 
