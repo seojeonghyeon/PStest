@@ -1,7 +1,8 @@
-package backjoonTest;
+package backjoon1026;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Main {
 
