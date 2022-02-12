@@ -1,7 +1,7 @@
-package backjoonTest;
+package backjoon7568;
 
 import java.io.*;
-import java.util.*;
+import java.util.StringTokenizer;
 
 public class Main {
 
