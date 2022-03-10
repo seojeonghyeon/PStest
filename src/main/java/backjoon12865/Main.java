@@ -25,8 +25,9 @@ public class Main {
         if(k<0) return 0;
         if(V[k][availableCapacity] == -1){
             int withoutCurrItem = optimumSubjectToItemAndCapacity(items, k-1, availableCapacity, V);
-            int withCurrItem = availableCapacity < items.get(k).weight ? 0 : items.get(k).value
-                    + optimumSubjectToItemAndCapacity(items, k-1, availableCapacity-items.get(k).weight, V);
+
+            int withCurrItem = availableCapacity < items.get(k).weight ? 0 : items.get(k).value + optimumSubjectToItemAndCapacity(items, k-1, availableCapacity-items.get(k).weight, V);
+
             V[k][availableCapacity] = Math.max(withoutCurrItem, withCurrItem);
         }
         return V[k][availableCapacity];

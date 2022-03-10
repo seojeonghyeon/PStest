@@ -1,7 +1,6 @@
-package backjoonTest;
+package backjoon1149;
 
 import java.io.*;
-import java.util.*;
 
 public class Main {
 
